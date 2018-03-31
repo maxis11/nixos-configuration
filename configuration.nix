@@ -180,7 +180,8 @@
       bc
       mkpasswd
       gnash
-
+      redshift
+      
       #themes
       breeze-qt5
       breeze-gtk
