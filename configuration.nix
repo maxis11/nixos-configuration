@@ -104,9 +104,9 @@
     variables = {
       BROWSER = pkgs.lib.mkOverride 0 "firefox";
       EDITOR = pkgs.lib.mkOverride 0 "nvim";
-      QT_QPA_PLATFORM = "wayland";
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
+      # QT_QPA_PLATFORM = "wayland"; #FIXME: application menu not working
+      # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      # _JAVA_AWT_WM_NONREPARENTING = "1";
       SWAY_DEBUG="false";
       VDPAU_DRIVER="r600";
     };
@@ -124,6 +124,10 @@
       python
       meson
       manpages
+      gcc_multi
+      clang_6
+      lldb
+      gdb
 
       # desktop
       sway
@@ -187,6 +191,11 @@
       openjdk
       gnome3.dconf
       matterbridge
+      youtube-dl
+      qt5.qtwayland
+      wayland-protocols
+      kdeFrameworks.kwayland
+      kwayland-integration
 
       #themes
       breeze-qt5
