@@ -1,0 +1,94 @@
+[colors]
+# Base16 Material Darker 
+# Author: Nate Peterson
+
+foreground          = #eeffff
+foreground_bold     = #eeffff
+cursor              = #eeffff
+cursor_foreground   = #212121
+background          = rgba(33, 33, 33, 0.6)
+highlight           = #2f2f2f
+
+# 16 color space
+
+# Black, Gray, Silver, White
+color0  = #212121
+color8  = #4a4a4a
+color7  = #eeffff
+color15 = #ffffff
+
+# Red
+color1  = #f07178
+color9  = #f07178
+
+# Green
+color2  = #c3e88d
+color10 = #c3e88d
+
+# Yellow
+color3  = #ffcb6b
+color11 = #ffcb6b
+
+# Blue
+color4  = #82aaff
+color12 = #82aaff
+
+# Purple
+color5  = #c792ea
+color13 = #c792ea
+
+# Teal
+color6  = #89ddff
+color14 = #89ddff
+
+# Extra colors
+color16 = #f78c6c
+color17 = #ff5370
+color18 = #303030
+color19 = #353535
+color20 = #b2ccd6
+color21 = #eeffff
+
+[options]
+allow_bold = true
+#audible_bell = false
+clickable_url = true
+dynamic_title = true
+font = Source Code Pro 9
+#fullscreen = true
+#geometry = 640x480
+#icon_name = terminal
+#mouse_autohide = false
+#scroll_on_output = false
+#scroll_on_keystroke = true
+# Length of the scrollback buffer, 0 disabled the scrollback buffer
+# and setting it to a negative value means "infinite scrollback"
+scrollback_lines = 10000
+#search_wrap = true
+#urgent_on_bell = true
+hyperlinks = true
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+browser = xdg-open
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+#cursor_shape = block
+
+# Hide links that are no longer valid in url select overlay mode
+#filter_unmatched_urls = true
+
+# Emit escape sequences for extra modified keys
+#modify_other_keys = false
+
+# set size hints for the window
+#size_hints = false
+
+# "off", "left" or "right"
+scrollbar = right
+
+[hints]
+font = Source Code Pro 12
+vim: ft=dosini cms=#%s
