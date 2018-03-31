@@ -184,6 +184,9 @@
       gnash
       redshift
       geoclue2
+      openjdk
+      gnome3.dconf
+      matterbridge
 
       #themes
       breeze-qt5
@@ -219,6 +222,7 @@
         export WLC_REPEAT_RATE=25
       '';
     };
+    java.enable = true;
     mtr.enable = true;
     gnupg.agent = { enable = true; enableSSHSupport = true; };
   };
