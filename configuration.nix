@@ -225,11 +225,11 @@
     timesyncd.enable = true;
     locate.enable = true;
     printing.enable = true;
+    geoclue2.enable = true;
     # flatpak.enable = true; # TODO: activate when it will be ready
     redshift = {
       enable = true;
-      latitude = "55.75222";
-      longitude = "37.61556";
+      provider = "geoclue2";
       temperature.day = 5700;
       temperature.night = 4600;
     };
