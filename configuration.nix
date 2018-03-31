@@ -107,6 +107,8 @@
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       _JAVA_AWT_WM_NONREPARENTING = "1";
+      SWAY_DEBUG="false";
+      VDPAU_DRIVER="r600";
     };
     systemPackages = with pkgs; [
       # dev
@@ -259,7 +261,7 @@
       autorun = false;
       exportConfiguration = true;
       layout = "us,ru";
-      xkbOptions = "eurosign:e, grp:alt_shift_toggle";
+      xkbOptions = "grp:alt_shift_toggle";
       libinput.enable = true;
       videoDrivers = [ "radeon" "virtualbox" ];
       # displayManager.slim.enable = true;
@@ -280,6 +282,9 @@
       source-code-pro
       source-sans-pro
       source-serif-pro
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
       inconsolata 
       ubuntu_font_family
       dejavu_fonts
