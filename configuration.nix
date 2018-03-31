@@ -119,11 +119,9 @@
       fish
       vscode
       neovim
-      neovim-qt
       python
       meson
       manpages
-      yakuake
 
       # desktop
       sway
@@ -259,9 +257,9 @@
       autorun = false;
       exportConfiguration = true;
       layout = "us,ru";
-      xkbOptions = "eurosign:e";
+      xkbOptions = "eurosign:e, grp:alt_shift_toggle";
       libinput.enable = true;
-      videoDrivers = [ "ati" "radeon" "virtualbox" ];
+      videoDrivers = [ "radeon" "virtualbox" ];
       # displayManager.slim.enable = true;
       # windowManager.i3.enable = true;
       # desktopManager.default = "none";
