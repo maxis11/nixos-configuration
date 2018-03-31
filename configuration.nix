@@ -181,7 +181,8 @@
       mkpasswd
       gnash
       redshift
-      
+      geoclue2
+
       #themes
       breeze-qt5
       breeze-gtk
