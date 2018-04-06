@@ -57,7 +57,7 @@ dynamic_title = true
 font = Noto Sans Mono 09 
 #fullscreen = true
 #geometry = 640x480
-#icon_name = terminal
+icon_name = Arc
 #mouse_autohide = false
 #scroll_on_output = false
 #scroll_on_keystroke = true
@@ -75,7 +75,7 @@ browser = xdg-open
 cursor_blink = system
 
 # "block", "underline" or "ibeam"
-#cursor_shape = block
+cursor_shape = block
 
 # Hide links that are no longer valid in url select overlay mode
 #filter_unmatched_urls = true
@@ -91,4 +91,4 @@ scrollbar = right
 
 [hints]
 font = Source Code Pro 12
-vim: ft=dosini cms=#%s
+

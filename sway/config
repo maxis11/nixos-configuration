@@ -19,11 +19,24 @@ output * bg /home/zatm8/Images/wallpaper.jpg fill
 
 bindsym $mod+t        exec $term
 bindsym $mod+d 	      exec $menu
-bindsym $mod+Shift+b  exec $BROWSER
+bindsym $mod+Shift+b  exec env GTK_THEME=Adwaita:light $BROWSER
 bindsym $mod+Shift+c  reload
 bindsym $mod+Shift+q  kill
 bindsym $mod+Shift+e  exit
 bindsym $mod+Shift+l  exec i3lock 
+bindsym $mod+Shit+m   exec $MESSENGER
+
+#Volume controls
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
+bindsym XF86AudioMute exec pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
+
+# Media player controls
+bindsym XF86AudioPlay exec mpc play
+bindsym XF86AudioPause exec mpc pause
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc previous
+
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
 # Despite the name, also works for non-floating windows.
@@ -144,7 +157,7 @@ bar {
         background #101010
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
-    status_command i3status
+    status_command i3status 
     tray_output primary
 }
 

@@ -21,8 +21,9 @@
       efi.canTouchEfiVariables = true;
       timeout = 10;
     };
+    kernel.sysctl."net.ipv4.forwarding" = true;
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = ["kvm-amd" ];
+    kernelModules = ["kvm-amd" "fuse" "coretemp"];
     cleanTmpDir = true;
     plymouth.enable = true;
   };
@@ -97,6 +98,10 @@
   time.timeZone = "Europe/Moscow";
 
   environment = {
+    interactiveShellInit = ''
+      alias glola = 'git log --graph --decorate --pretty=oneline --abbrev-commit --all'
+      alias glol  = 'git log --graph --decorate --pretty=oneline --abbrev-commit'
+    '';
     shells = [
       "${pkgs.bash}/bin/bash"
       "${pkgs.fish}/bin/fish"
@@ -104,9 +109,19 @@
     variables = {
       BROWSER = pkgs.lib.mkOverride 0 "firefox";
       EDITOR = pkgs.lib.mkOverride 0 "nvim";
+      MESSENGER = "telegram-desktop";
+      XCURSOR_PATH = [
+        "${config.system.path}/share/icons"
+        "$HOME/.icons"
+        "$HOME/.nix-profile/share/icons/"
+      ];
+      GTK_DATA_PREFIX = [
+        "${config.system.path}"
+      ];
       # QT_QPA_PLATFORM = "wayland"; #FIXME: application menu not working
       # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       # _JAVA_AWT_WM_NONREPARENTING = "1";
+      SWAY_CURSOR_THEME="breeze_cursors";
       SWAY_DEBUG="false";
       VDPAU_DRIVER="r600";
     };
@@ -192,12 +207,22 @@
       gnome3.dconf
       matterbridge
       youtube-dl
-      qt5.qtwayland
+      qt5.full
       wayland-protocols
       kdeFrameworks.kwayland
       kwayland-integration
+      lxappearance
+      qt5ct
+      lm_sensors
+      acpi
+      docker
+      udiskie
 
       #themes
+      gnome3.gnome-themes-standard
+      gnome3.defaultIconTheme
+      arc-theme
+      arc-icon-theme
       breeze-qt5
       breeze-gtk
       breeze-icons
@@ -231,22 +256,36 @@
         export WLC_REPEAT_RATE=25
       '';
     };
+    tmux = {	
+      enable = true;
+      clock24 = true;
+      keyMode = "vi";
+    };
+    qt5ct.enable = true;
     java.enable = true;
     mtr.enable = true;
     gnupg.agent = { enable = true; enableSSHSupport = true; };
   };
 
   services = {
+    dnscrypt-proxy.enable = true;
+    acpid.enable = true;
     timesyncd.enable = true;
     locate.enable = true;
     printing.enable = true;
     geoclue2.enable = true;
     # flatpak.enable = true; # TODO: activate when it will be ready
-    redshift = {
-      enable = true;
-      provider = "geoclue2";
-      temperature.day = 5700;
-      temperature.night = 4600;
+    # FIXME: redshift doesn't work with sway 
+    # redshift = {
+    #   enable = true;
+    #   provider = "geoclue2";
+    #   temperature.day = 5700;
+    #   temperature.night = 4600;
+    # };
+    openvpn = {
+      servers = {
+        officeVPN  = { config = '' config /root/nixos/openvpn/officeVPN.conf ''; };
+      };
     };
     mpd = {
       enable = true;  
@@ -282,6 +321,18 @@
       # desktopManager.default = "none";
       # windowManager.default = "i3";
     };
+    #BUG: hibernate not working properly on my system
+    # logind.extraConfig = ''
+    #   HandlePowerKey=hibernate
+    #   HandleSuspendKey=hibernate
+    #   HandleHibernateKey=hibernate
+    #   HandleLidSwitch=ignore
+    #   HandleLidSwitchDocked=ignore
+    #   PowerKeyIgnoreInhibited=yes
+    #   SuspendKeyIgnoreInhibited=yes
+    #   HibernateKeyIgnoreInhibited=yes
+    #   LidSwitchIgnoreInhibited=yes
+    # '';
   };
 
   fonts = {
@@ -302,6 +353,21 @@
       ubuntu_font_family
       dejavu_fonts
     ];
+  };
+  
+  systemd.user.services."udiskie" = {
+    enable = true;
+    description = "udiskie to automount removable media";
+    wantedBy = [ "default.target" ];
+    path = with pkgs; [
+      gnome3.defaultIconTheme
+      gnome3.gnome_themes_standard
+      pythonPackages.udiskie
+    ];
+    environment.XDG_DATA_DIRS="${pkgs.breeze-icons}/share:${pkgs.gnome3.defaultIconTheme}/share:${pkgs.gnome3.gnome_themes_standard}/share";
+    serviceConfig.Restart = "always";
+    serviceConfig.RestartSec = 2;
+    serviceConfig.ExecStart = "${pkgs.udiskie}/bin/udiskie -a -t -n -F ";
   };
 
   security = {
@@ -347,15 +413,23 @@
       shell = pkgs.fish;
     };
   };
+
   virtualization = {
-    libvirtd.enable = true;
+    libvirtd.enable = true;  
     memorySize = 1024;
     graphics = true;
     qemu = {
       enable = true;
       networkingOptions = [ "-net nic,macaddr=52:53:54:55:56:57" "-net vde,sock=/run/vde.ctl" ];
     };
-    docker.enable = true;
-    virtualbox.host.enable = true;
+  };
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = true;
+      liveRestore = true;
+    };
+  virtualbox.host.enable = true;
   }; 
 }

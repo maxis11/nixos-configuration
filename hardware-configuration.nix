@@ -24,6 +24,9 @@
     };
 
   swapDevices = [ {device = "/dev/disk/by-label/swap"; } ]; 
-
+  
+  #boot.initrd.postDeviceCommands = "sleep 5";
+  #boot.resumeDevice = "/dev/disk/by-label/sleep";
+  
   nix.maxJobs = lib.mkDefault 2;
 }
