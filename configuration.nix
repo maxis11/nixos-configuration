@@ -99,8 +99,6 @@
 
   environment = {
     interactiveShellInit = ''
-      alias glola = 'git log --graph --decorate --pretty=oneline --abbrev-commit --all'
-      alias glol  = 'git log --graph --decorate --pretty=oneline --abbrev-commit'
     '';
     shells = [
       "${pkgs.bash}/bin/bash"
@@ -118,7 +116,8 @@
       GTK_DATA_PREFIX = [
         "${config.system.path}"
       ];
-      # QT_QPA_PLATFORM = "wayland"; #FIXME: application menu not working
+      #FIXME: application menu doesn't work if using wayland platform
+      # QT_QPA_PLATFORM = "wayland"; 
       # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       # _JAVA_AWT_WM_NONREPARENTING = "1";
       SWAY_CURSOR_THEME="breeze_cursors";
@@ -131,18 +130,23 @@
       tmux
       tree
       screen
+      screenfetch
       gitAndTools.gitFull
       mosh
       fish
-      vscode
       neovim
       python
       meson
       manpages
       gcc_multi
-      clang_6
+      clang
+      clang-tools
       lldb
       gdb
+      tcpdump
+      nmap
+      openjdk
+      docker
 
       # desktop
       sway
@@ -167,7 +171,6 @@
       mpv
       mpd
       ncmpcpp
-      screenfetch
       chromium
       firefox
       tor
@@ -194,16 +197,12 @@
       xorg.xkill
       iptables
       sudo
-      tcpdump
-      nmap
       zlib
       bzip2
       bc
       mkpasswd
       gnash
-      redshift
       geoclue2
-      openjdk
       gnome3.dconf
       matterbridge
       youtube-dl
@@ -215,7 +214,6 @@
       qt5ct
       lm_sensors
       acpi
-      docker
       udiskie
 
       #themes
@@ -274,7 +272,8 @@
     locate.enable = true;
     printing.enable = true;
     geoclue2.enable = true;
-    # flatpak.enable = true; # TODO: activate when it will be ready
+    # TODO: enable this
+    # flatpak.enable = true; 
     # FIXME: redshift doesn't work with sway 
     # redshift = {
     #   enable = true;
@@ -315,24 +314,22 @@
       layout = "us,ru";
       xkbOptions = "grp:alt_shift_toggle";
       libinput.enable = true;
-      videoDrivers = [ "radeon" "virtualbox" ];
+      videoDrivers = [ "radeon" "virtualbox" "swr" ];
       # displayManager.slim.enable = true;
       # windowManager.i3.enable = true;
       # desktopManager.default = "none";
       # windowManager.default = "i3";
     };
-    #BUG: hibernate not working properly on my system
-    # logind.extraConfig = ''
-    #   HandlePowerKey=hibernate
-    #   HandleSuspendKey=hibernate
-    #   HandleHibernateKey=hibernate
-    #   HandleLidSwitch=ignore
-    #   HandleLidSwitchDocked=ignore
-    #   PowerKeyIgnoreInhibited=yes
-    #   SuspendKeyIgnoreInhibited=yes
-    #   HibernateKeyIgnoreInhibited=yes
-    #   LidSwitchIgnoreInhibited=yes
-    # '';
+    #BUG: hibernate doesn't working properly on my laptop
+    logind.extraConfig = ''
+      HandleSuspendKey=suspend
+      HandleHibernateKey=suspend
+      HandleLidSwitch=ignore
+      HandleLidSwitchDocked=ignore
+      SuspendKeyIgnoreInhibited=yes
+      HibernateKeyIgnoreInhibited=yes
+      LidSwitchIgnoreInhibited=yes
+    '';
   };
 
   fonts = {
@@ -402,7 +399,6 @@
         "docker"
         "audio"
         "video"
-        "sudoers"
         "systemd-journal"
         "disk"
         "power"
