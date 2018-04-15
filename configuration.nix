@@ -23,7 +23,7 @@
     };
     kernel.sysctl."net.ipv4.forwarding" = true;
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = ["kvm-amd" "fuse" "coretemp"];
+    kernelModules = [ "cifs" "kvm-amd" "fuse" "coretemp" "crc32" ];
     cleanTmpDir = true;
     plymouth.enable = true;
   };
@@ -68,6 +68,12 @@
     # wireless.enable = true;
     firewall.enable = false; #TODO: enable
     enableB43Firmware = true;
+    extraHosts = ''
+      192.168.1.159 rdcjira.rpkb.ru
+      192.168.1.165 mail.rpkb.ru
+      192.168.1.165 rdcmail16.rpkb.ru
+      192.168.1.170 rdcgitlab.rpkb.ru
+    '';
   };
 
   nixpkgs.config = {
@@ -76,6 +82,14 @@
     virtualbox = {
       enableExtensionPack = true;
       pulseSupport = true;
+    };
+    packageOverrides = pkgs:
+    { linux_latest = pkgs.linux_latest.override {
+        extraConfig =
+          ''
+            KGDB y
+          '';
+      };
     };
   };
 
@@ -116,7 +130,7 @@
       GTK_DATA_PREFIX = [
         "${config.system.path}"
       ];
-      #FIXME: application menu doesn't work if using wayland platform
+      #FIXME: application menu doesn't working if using wayland platform
       # QT_QPA_PLATFORM = "wayland"; 
       # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       # _JAVA_AWT_WM_NONREPARENTING = "1";
@@ -127,6 +141,7 @@
     systemPackages = with pkgs; [
       # dev
       vim_configurable
+      neovim
       tmux
       tree
       screen
@@ -134,12 +149,13 @@
       gitAndTools.gitFull
       mosh
       fish
-      neovim
+      cscope
       python
       meson
       manpages
       gcc_multi
-      clang
+      clang_multi
+      glibc_multi
       clang-tools
       lldb
       gdb
